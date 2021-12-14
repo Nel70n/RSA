@@ -1,9 +1,8 @@
 class GenerateSimpleNumbers:
-    def GenerateList(self, count_number : int, start_number : int):    
+    def GenerateList(self, count_number, start_number):    
         self.number = start_number
         self.return_list = []
-        self.bro = count_number
-        while len(self.return_list) != self.bro:
+        while len(self.return_list) != count_number:
             self.flag = True
 
             for divisor in range(2, int(self.number**0.5)+1):
