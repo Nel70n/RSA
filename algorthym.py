@@ -1,7 +1,8 @@
 class GenerateSimpleNumbers:
-    def __init__(self, count_number : int, start_number : int):    
+    def GenerateList(self, count_number : int, start_number : int):    
         self.number = start_number
         self.return_list = []
+
         while len(self.return_list) != count_number:
             flag = True
 
