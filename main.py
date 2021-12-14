@@ -1,4 +1,4 @@
-import RSA
+import CryptRsa
 
-root_enc_file = "test.txt"
-session = RSA.RSA(input_file=root_enc_file)
+root = "test.txt"
+session = CryptRsa.RSA(input_file=root)
