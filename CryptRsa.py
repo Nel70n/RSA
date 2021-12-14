@@ -5,4 +5,4 @@ class RSA:
         self.string_from_file = ""
         for line in self.file_session:
             self.string_from_file += line.replace('\n', '').replace(' ', '').lower()
-    
+        print(self.string_from_file)
