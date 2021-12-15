@@ -24,7 +24,7 @@ class RSA:
             div, x, y = self.gcd_extended(num2 % num1, num1)
         return (div, y - (num2 // num1) * x, x)
 
-
+    # TODO: #3 разобраться, какого хуя не работает encode/decode по-человечески.
     def ControlSum(self, message : str):
         self.bin_message = message.encode("utf-8")
         self.resuls_control = 0
