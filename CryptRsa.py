@@ -2,15 +2,17 @@ import random
 
 class RSA:
     """
-
+    В классе реализуется ряд заданий, необходимых для сдалчи нам лабы по крипте:
+    1. Генерация ключей
+    2. Кодирование и декодирование файла
+    3. Подписывание файла приватной экспонентой 
+    4. Првоерка подписи документа
     """
     def __init__(self, input_file : str):
-        self.file_session = open(input_file)
+        self.file_session = open(input_file, encoding='UTF-8')
         self.string_from_file = ""
         for line in self.file_session:
             self.string_from_file += line.replace('\n', '').replace(' ', '').lower()
-
-    # TODO: #1 Написать генерацию публичного и приватного ключа 
 
     def gcd_extended(self, num1, num2):
         """
@@ -22,7 +24,21 @@ class RSA:
             div, x, y = self.gcd_extended(num2 % num1, num1)
         return (div, y - (num2 // num1) * x, x)
 
-    def Generate_PP_keys(self, simple_numbers_list : list, bloc_simple_numbers : list):
+
+    def ControlSum(self, message : str):
+        self.bin_message = message.encode("utf-8")
+        self.resuls_control = 0
+        print(self.bin_message)
+        for i in range(len(self.bin_message)):
+            print(self.bin_message[i], end="")
+            self.resuls_control += self.bin_message[i]
+        print(self.resuls_control)
+        self.resuls_control %= 2
+        print(self.resuls_control)
+        return self.resuls_control
+
+
+    def GeneratePPkeys(self, simple_numbers_list : list, bloc_simple_numbers : list):
         """
         
         """
@@ -69,3 +85,11 @@ class RSA:
         self.dec_message_root = open("decode.txt", "w", encoding="UTF-8")
         self.dec_message_root.write(str(self.dec_message))
         self.dec_message_root.close()
+
+    # TODO: #2 доделать так, чтобы подпись высчитывалась по контрольной сумме.
+    def DigitalSignature(self, privite_key_root : str):
+        self.file_privite = open(privite_key_root)
+        self.message_encod = self.ControlSum(self.string_from_file)
+        self.d , self.n = map(int,self.file_privite.readline().split(" "))
+        # self.s = pow(self.string_from_file, self.d, self.n)
+
