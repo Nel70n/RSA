@@ -31,6 +31,13 @@ session.DecodeFile(
     root_privite_key="privite key.txt"
 )
 """
-session.DigitalSignature(
-    privite_key_root="privite key.txt"
+a = session.DigitalSignature(
+    privite_key_root="cp privite key.txt"
+)
+
+
+DS = 'DigitalSignature.txt'
+session = CryptRsa.RSA(input_file=DS)
+session.EncodeFile(
+    root_public_key="cp public key.txt"
 )

@@ -6,7 +6,7 @@ class RSA:
     1. Генерация ключей
     2. Кодирование и декодирование файла
     3. Подписывание файла приватной экспонентой 
-    4. Првоерка подписи документа
+    4. Дешифрация 
     """
     def __init__(self, input_file : str):
         self.file_session = open(input_file, encoding='UTF-8')
@@ -27,14 +27,11 @@ class RSA:
     # TODO: #3 разобраться, какого хуя не работает encode/decode по-человечески.
     def ControlSum(self, message : str):
         self.bin_message = message.encode("utf-8")
-        self.resuls_control = 0
-        print(self.bin_message)
-        for i in range(len(self.bin_message)):
-            print(self.bin_message[i], end="")
-            self.resuls_control += self.bin_message[i]
-        print(self.resuls_control)
-        self.resuls_control %= 2
-        print(self.resuls_control)
+        self.resuls_control = self.bin_message[0]
+
+        for i in range(1, len(self.bin_message)):
+            self.resuls_control ^= self.bin_message[i]
+        
         return self.resuls_control
 
 
@@ -86,10 +83,14 @@ class RSA:
         self.dec_message_root.write(str(self.dec_message))
         self.dec_message_root.close()
 
-    # TODO: #2 доделать так, чтобы подпись высчитывалась по контрольной сумме.
+    # TODO: #2 доделать так, чтобы подпись высчитывалась по контрольной сумме. – Сделано
+    # TODO: #3 доделать ЭП.
     def DigitalSignature(self, privite_key_root : str):
         self.file_privite = open(privite_key_root)
-        self.message_encod = self.ControlSum(self.string_from_file)
+        self.message_encode = self.ControlSum(self.string_from_file)
         self.d , self.n = map(int,self.file_privite.readline().split(" "))
-        # self.s = pow(self.string_from_file, self.d, self.n)
 
+        self.digital_signature = pow(self.message_encode, self.d, self.n)
+        self.file_DS = open("DigitalSignature.txt", "w", encoding='UTF-8')
+        self.file_DS.write(str(self.digital_signature))
+        self.file_DS.close()
