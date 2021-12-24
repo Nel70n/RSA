@@ -24,7 +24,6 @@ class RSA:
             div, x, y = self.gcd_extended(num2 % num1, num1)
         return (div, y - (num2 // num1) * x, x)
 
-    # TODO: #3 разобраться, какого хуя не работает encode/decode по-человечески.
     def ControlSum(self, message : str):
         self.bin_message = message.encode("utf-8")
         self.resuls_control = self.bin_message[0]
@@ -33,7 +32,6 @@ class RSA:
             self.resuls_control ^= self.bin_message[i]
         
         return self.resuls_control
-
 
     def GeneratePPkeys(self, simple_numbers_list : list, bloc_simple_numbers : list):
         """
@@ -83,8 +81,6 @@ class RSA:
         self.dec_message_root.write(str(self.dec_message))
         self.dec_message_root.close()
 
-    # TODO: #2 доделать так, чтобы подпись высчитывалась по контрольной сумме. – Сделано
-    # TODO: #3 доделать ЭП.
     def DigitalSignature(self, privite_key_root : str):
         self.file_privite = open(privite_key_root)
         self.message_encode = self.ControlSum(self.string_from_file)
